@@ -94,7 +94,9 @@ function M.code()
 end
 events.connect(events.FILE_BEFORE_SAVE, function(filename)
   if not M.on_save then return end
-  for _, patt in ipairs(M.ignore_file_patterns) do if filename:find(patt) then return end end
+  if filename then
+    for _, patt in ipairs(M.ignore_file_patterns) do if filename:find(patt) then return end end
+  end
   M.code()
 end)
 
