@@ -108,7 +108,7 @@ end)
 -- @see ignore_header_lines
 -- @see ignore_footer_lines
 -- @see line_length
--- @name reformat
+-- @name paragraph
 function M.paragraph()
   if buffer.selection_empty then
     local s = buffer:line_from_position(buffer.current_pos)

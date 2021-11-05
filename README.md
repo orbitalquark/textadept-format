@@ -38,8 +38,8 @@ See also:
 
 * [`format.commands`](#format.commands)
 
-<a id="format.reformat"></a>
-### `format.reformat`()
+<a id="format.paragraph"></a>
+### `format.paragraph`()
 
 Reformats using the Unix `fmt` tool either the selected text or the current paragraph,
 according to the rules of `textadept.editing.filter_through()`.
