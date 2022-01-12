@@ -48,7 +48,8 @@ end
 -- @name commands
 M.commands = {
   lua = function() return has_config_file('.lua-format') and 'lua-format' or nil end,
-  cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end
+  cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
+  go = 'gofmt'
 }
 M.commands.ansi_c = M.commands.cpp
 
