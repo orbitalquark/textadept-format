@@ -84,7 +84,7 @@ M.line_length = 100
 -- @see commands
 -- @name code
 function M.code()
-  local command = M.commands[buffer:get_lexer()]
+  local command = M.commands[buffer.lexer_language]
   if type(command) == 'function' then command = command() end
   if not command then return end
   local current_dir = lfs.currentdir()
