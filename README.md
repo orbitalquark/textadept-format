@@ -7,9 +7,14 @@ Install this module by copying it into your *~/.textadept/modules/* directory or
 
     require('format')
 
-There will be an "Edit > Reformat" menu. You can also assign a keybinding:
+There will be an "Edit > Reformat" menu.
 
-    keys['ctrl+alt+j'] = require('format').paragraph
+## Key Bindings
+
+Windows and Linux | macOS | Terminal | Command
+-|-|-|-
+**Edit**| | |
+Ctrl+Shift+J | ⌘⇧J | ^J | Reformat paragraph
 
 
 ## Fields defined by `format`

@@ -9,9 +9,14 @@
 --
 --     require('format')
 --
--- There will be an "Edit > Reformat" menu. You can also assign a keybinding:
+-- There will be an "Edit > Reformat" menu.
 --
---     keys['ctrl+alt+j'] = require('format').paragraph
+-- ### Key Bindings
+--
+-- Windows and Linux | macOS | Terminal | Command
+-- -|-|-|-
+-- **Edit**| | |
+-- Ctrl+Shift+J | ⌘⇧J | ^J | Reformat paragraph
 --
 -- @field line_length (number)
 --   The maximum number of characters to allow on a line when reformatting paragraphs. The
@@ -157,5 +162,6 @@ table.insert(m_edit, #m_edit - 1, {
   {_L['Paragraph'], M.paragraph}
 })
 -- LuaFormatter on
+keys[not OSX and 'ctrl+J' or 'cmd+J'] = M.paragraph
 
 return M
