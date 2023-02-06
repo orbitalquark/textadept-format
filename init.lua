@@ -1,6 +1,5 @@
 -- Copyright 2021-2023 Mitchell. See LICENSE.
 
---[[ This comment is for LuaDoc.
 ---
 -- Format/reformat paragraph and code.
 --
@@ -17,13 +16,7 @@
 -- -|-|-|-
 -- **Edit**| | |
 -- Ctrl+Shift+J | ⌘⇧J | ^J | Reformat paragraph
---
--- @field line_length (number)
---   The maximum number of characters to allow on a line when reformatting paragraphs. The
---   default value is 100.
--- @field on_save (bool)
---   Whether or not to invoke a code formatter on save. The default value is `true`.
-module('format')]]
+-- @module format
 local M = {}
 
 -- Localizations.
@@ -49,8 +42,6 @@ end
 
 ---
 -- Map of lexer languages to string code formatter commands or functions that return such commands.
--- @class table
--- @name commands
 M.commands = {
   lua = function() return has_config_file('.lua-format') and 'lua-format' or nil end,
   cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
@@ -60,34 +51,32 @@ M.commands.ansi_c = M.commands.cpp
 
 ---
 -- Header lines to ignore when reformatting paragraphs.
--- These can be LuaDoc or Doxygen headers for example.
--- @class table
--- @name ignore_header_lines
+-- These can be LuaDoc/LDoc or Doxygen headers for example.
 M.ignore_header_lines = {'---', '/**'}
 
 ---
 -- Footer lines to ignore when reformatting paragraphs.
 -- These can be Doxygen footers for example.
--- @class table
--- @name ignore_footer_lines
 M.ignore_footer_lines = {'*/'}
 
 ---
 -- Patterns that match filenames to ignore when formatting on save.
 -- This is useful for projects with a top-level format config file, but subfolder dependencies
 -- whose code should not be formatted on save.
--- @class table
--- @name ignore_file_patterns
 M.ignore_file_patterns = {}
 
+--- Whether or not to invoke a code formatter on save. The default value is `true`.
 M.on_save = true
+
+---
+-- The maximum number of characters to allow on a line when reformatting paragraphs. The default
+-- value is 100.
 M.line_length = 100
 
 ---
 -- Reformats using a code formatter for the current buffer's lexer language either the selected
 -- text or the current paragraph, according to the rules of `textadept.editing.filter_through()`.
 -- @see commands
--- @name code
 function M.code()
   local command = M.commands[buffer.lexer_language]
   if type(command) == 'function' then command = command() end
@@ -116,7 +105,6 @@ end)
 -- @see ignore_header_lines
 -- @see ignore_footer_lines
 -- @see line_length
--- @name paragraph
 function M.paragraph()
   if buffer.selection_empty then
     local s = buffer:line_from_position(buffer.current_pos)
@@ -153,15 +141,13 @@ function M.paragraph()
   textadept.editing.filter_through(cmd)
 end
 
--- LuaFormatter off
 -- Add menu entry.
 local m_edit = textadept.menu.menubar[_L['Edit']]
 table.insert(m_edit, #m_edit - 1, {
-  title = _L['Reformat'],
-  {_L['Code'], M.code},
+  title = _L['Reformat'], --
+  {_L['Code'], M.code}, --
   {_L['Paragraph'], M.paragraph}
 })
--- LuaFormatter on
 keys[not OSX and 'ctrl+J' or 'cmd+J'] = M.paragraph
 
 return M
