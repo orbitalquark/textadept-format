@@ -116,7 +116,7 @@ function M.paragraph()
     end
     local line = buffer:get_line(s)
     for _, header in ipairs(M.ignore_header_lines) do
-      if line:find('^%s*' .. header:gsub('%p', '%%%0')) then
+      if line:find('^%s*' .. header:gsub('%p', '%%%0') .. '%s*$') then
         s = s + 1
         break
       end
