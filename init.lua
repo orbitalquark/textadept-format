@@ -1,7 +1,6 @@
 -- Copyright 2021-2023 Mitchell. See LICENSE.
 
----
--- Format/reformat paragraph and code.
+--- Format/reformat paragraph and code.
 --
 -- Install this module by copying it into your *~/.textadept/modules/* directory or Textadept's
 -- *modules/* directory, and then putting the following in your *~/.textadept/init.lua*:
@@ -28,7 +27,7 @@ if not rawget(_L, 'Reformat') then
   _L['Paragraph'] = '_Paragraph'
 end
 
--- Helper function that returns whether or not the given config file exists in the current or
+--- Helper function that returns whether or not the given config file exists in the current or
 -- a parent directory of the current buffer's filename.
 local function has_config_file(filename)
   if not buffer.filename then return false end
@@ -40,8 +39,8 @@ local function has_config_file(filename)
   return false
 end
 
----
--- Map of lexer languages to string code formatter commands or functions that return such commands.
+--- Map of lexer languages to string code formatter commands or functions that return such
+-- commands.
 M.commands = {
   lua = function() return has_config_file('.lua-format') and 'lua-format' or nil end,
   cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
@@ -49,18 +48,15 @@ M.commands = {
 }
 M.commands.ansi_c = M.commands.cpp
 
----
--- Header lines to ignore when reformatting paragraphs.
+--- Header lines to ignore when reformatting paragraphs.
 -- These can be LuaDoc/LDoc or Doxygen headers for example.
 M.ignore_header_lines = {'---', '/**'}
 
----
--- Footer lines to ignore when reformatting paragraphs.
+--- Footer lines to ignore when reformatting paragraphs.
 -- These can be Doxygen footers for example.
 M.ignore_footer_lines = {'*/'}
 
----
--- Patterns that match filenames to ignore when formatting on save.
+--- Patterns that match filenames to ignore when formatting on save.
 -- This is useful for projects with a top-level format config file, but subfolder dependencies
 -- whose code should not be formatted on save.
 M.ignore_file_patterns = {}
@@ -68,13 +64,11 @@ M.ignore_file_patterns = {}
 --- Whether or not to invoke a code formatter on save. The default value is `true`.
 M.on_save = true
 
----
--- The maximum number of characters to allow on a line when reformatting paragraphs. The default
+--- The maximum number of characters to allow on a line when reformatting paragraphs. The default
 -- value is 100.
 M.line_length = 100
 
----
--- Reformats using a code formatter for the current buffer's lexer language either the selected
+--- Reformats using a code formatter for the current buffer's lexer language either the selected
 -- text or the current paragraph, according to the rules of `textadept.editing.filter_through()`.
 -- @see commands
 function M.code()
@@ -95,8 +89,7 @@ events.connect(events.FILE_BEFORE_SAVE, function(filename)
   M.code()
 end)
 
----
--- Reformats using the Unix `fmt` tool either the selected text or the current paragraph,
+--- Reformats using the Unix `fmt` tool either the selected text or the current paragraph,
 -- according to the rules of `textadept.editing.filter_through()`.
 -- For styled text, paragraphs are either blocks of same-styled lines (e.g. code comments),
 -- or lines surrounded by blank lines.
