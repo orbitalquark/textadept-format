@@ -93,10 +93,9 @@ end)
 -- according to the rules of `textadept.editing.filter_through()`.
 -- For styled text, paragraphs are either blocks of same-styled lines (e.g. code comments),
 -- or lines surrounded by blank lines.
--- If the first line matches any of the lines in `ignore_header_lines`, it is not reformatted.
--- If the last line matches any of the lines in `ignore_footer_lines`, it is not reformatted.
--- @see ignore_header_lines
--- @see ignore_footer_lines
+-- If the first line matches any of the lines in `format.ignore_header_lines`, it is not
+-- reformatted. If the last line matches any of the lines in `format.ignore_footer_lines`,
+-- it is not reformatted.
 -- @see line_length
 function M.paragraph()
   if buffer.selection_empty then
