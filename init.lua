@@ -134,7 +134,7 @@ function M.paragraph()
 end
 
 -- Add menu entry.
-local m_edit = textadept.menu.menubar[_L['Edit']]
+local m_edit = textadept.menu.menubar['Edit']
 table.insert(m_edit, #m_edit - 1, {
   title = _L['Reformat'], --
   {_L['Code'], M.code}, --
