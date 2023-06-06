@@ -5,7 +5,7 @@
 -- Install this module by copying it into your *~/.textadept/modules/* directory or Textadept's
 -- *modules/* directory, and then putting the following in your *~/.textadept/init.lua*:
 --
---     require('format')
+--	require('format')
 --
 -- There will be an "Edit > Reformat" menu.
 --
