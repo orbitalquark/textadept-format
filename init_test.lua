@@ -14,6 +14,7 @@ test('format.code should use clang-format if a .clang-format exists', function()
 
 	test.assert_equal(buffer:get_text(), 'int main() { return 0; }')
 end)
+if not LINUX then skip('clang-format is only installed on Linux') end
 
 test('format.code should not format on save if format.on_save is disabled', function()
 	local _<close> = test.mock(format, 'on_save', false)
@@ -27,6 +28,7 @@ test('format.code should not format on save if format.on_save is disabled', func
 
 	test.assert_equal(buffer:get_text(), code)
 end)
+if not LINUX then skip('clang-format is only installed on Linux') end
 
 test('format.code should ignore saving files matching format.ignore_file_patterns', function()
 	local subdir = 'subdir'
@@ -43,6 +45,7 @@ test('format.code should ignore saving files matching format.ignore_file_pattern
 
 	test.assert_equal(buffer:get_text(), code)
 end)
+if not LINUX then skip('clang-format is only installed on Linux') end
 
 test('format.paragraph should reformat the current paragraph', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -57,6 +60,7 @@ test('format.paragraph should reformat the current paragraph', function()
 		''
 	})
 end)
+if not LINUX then skip('fmt si only installed on Linux') end
 
 test('format.paragraph should only reformat selected lines', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -77,6 +81,7 @@ test('format.paragraph should only reformat selected lines', function()
 		'line'
 	})
 end)
+if not LINUX then skip('fmt si only installed on Linux') end
 
 test('format.paragraph should only reformat the current style (e.g. Lua comments)', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -99,6 +104,7 @@ test('format.paragraph should only reformat the current style (e.g. Lua comments
 		'local y = 2'
 	})
 end)
+if not LINUX then skip('fmt si only installed on Linux') end
 
 test('format.paragraph should ignore header and footer lines (e.g. Doxygen comments)', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -122,6 +128,7 @@ test('format.paragraph should ignore header and footer lines (e.g. Doxygen comme
 		'int x;'
 	})
 end)
+if not LINUX then skip('fmt si only installed on Linux') end
 
 -- Coverage tests.
 
@@ -138,10 +145,13 @@ test('format.code should find files like .clang-format in subdirectories', funct
 
 	test.assert_equal(buffer:get_text(), test.lines{'int main() { return 0; }', ''})
 end)
+if not LINUX then skip('clang-format is only installed on Linux') end
 
 test('format.code should not format without a file like .clang-format', function()
+	local file = 'file.c'
 	local code = 'int main(){return 0;}'
-	local _<close> = test.tmpfile('.c', code, true)
+	local dir<close> = test.tmpdir{[file] = code}
+	io.open_file(dir / file)
 
 	format.code()
 
