@@ -69,6 +69,19 @@ value is 100.
 
 Whether or not to invoke a code formatter on save. The default value is `true`.
 
+<a id="format.prefix_map"></a>
+### `format.prefix_map` &lt;table&gt;
+
+Prefixes to remap when reformatting paragraphs.
+This is for paragraphs that have a first-line prefix that is different from subsequent
+line prefixes. For example, LuaDoc/LDoc comments start with '---' but continue with '--',
+and Doxygen comments start with '/**' but continue with ' *'.
+
+Fields:
+
+- `[/**]`: 
+- `[---]`: 
+
 
 ## Functions defined by `format`
 

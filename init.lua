@@ -52,6 +52,12 @@ M.commands.ansi_c = M.commands.cpp
 -- These can be LuaDoc/LDoc or Doxygen headers for example.
 M.ignore_header_lines = {'---', '/**'}
 
+--- Prefixes to remap when reformatting paragraphs.
+-- This is for paragraphs that have a first-line prefix that is different from subsequent
+-- line prefixes. For example, LuaDoc/LDoc comments start with '---' but continue with '--',
+-- and Doxygen comments start with '/**' but continue with ' *'.
+M.prefix_map = {['/**'] = ' *', ['---'] = '--'}
+
 --- Footer lines to ignore when reformatting paragraphs.
 -- These can be Doxygen footers for example.
 M.ignore_footer_lines = {'*/'}
@@ -126,11 +132,26 @@ function M.paragraph()
 		end
 		buffer:set_sel(buffer:position_from_line(s), buffer:position_from_line(e))
 	end
-	local prefix = buffer:get_line(buffer:line_from_position(buffer.selection_start)):match(
-		'^%s*(%p*)')
+
+	buffer:begin_undo_action()
+	local line_num = buffer:line_from_position(buffer.selection_start)
+	local prefix = buffer:get_line(line_num):match('^%s*(%p*)')
+	if M.prefix_map[prefix] then
+		-- Replace the prefix with its mapped prefix.
+		local pos = buffer:position_from_line(line_num)
+		buffer:set_target_range(pos, pos + #prefix)
+		buffer:replace_target(M.prefix_map[prefix])
+	end
 	local cmd = 'fmt -w ' .. M.line_length .. ' -c'
-	if prefix ~= '' then cmd = string.format('%s -p "%s"', cmd, prefix) end
+	if prefix ~= '' then cmd = string.format('%s -p "%s"', cmd, M.prefix_map[prefix] or prefix) end
 	textadept.editing.filter_through(cmd)
+	if M.prefix_map[prefix] then
+		-- Replace the mapped prefix with its original prefix.
+		buffer:set_target_range(buffer.selection_start, buffer.selection_start + #M.prefix_map[prefix])
+		buffer:replace_target(prefix)
+		buffer.selection_start = buffer.selection_start - #prefix
+	end
+	buffer:end_undo_action()
 end
 
 -- Add menu entry.

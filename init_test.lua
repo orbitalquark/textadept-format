@@ -130,6 +130,25 @@ test('format.paragraph should ignore header and footer lines (e.g. Doxygen comme
 		'int x;'
 	})
 end)
+
+test('format.paragraph should allow prefix mapping', function()
+	local _<close> = test.mock(format, 'line_length', 10)
+	local _<close> = test.tmpfile('.lua', test.lines{
+		'--- This is a really long comment', --
+		'local M = {}'
+	}, true)
+
+	format.paragraph()
+
+	test.assert_equal(buffer:get_text(), test.lines{
+		'--- This', --
+		'-- is a', --
+		'-- really', --
+		'-- long', --
+		'-- comment', --
+		'local M = {}'
+	})
+end)
 if not LINUX then skip('fmt si only installed on Linux') end
 
 -- Coverage tests.
