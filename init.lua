@@ -142,7 +142,7 @@ function M.paragraph()
 		buffer:set_target_range(pos, pos + #prefix)
 		buffer:replace_target(M.prefix_map[prefix])
 	end
-	local cmd = 'fmt -w ' .. M.line_length .. ' -c'
+	local cmd = (not OSX and 'fmt' or 'gfmt') .. ' -w ' .. M.line_length .. ' -c'
 	if prefix ~= '' then cmd = string.format('%s -p "%s"', cmd, M.prefix_map[prefix] or prefix) end
 	textadept.editing.filter_through(cmd)
 	if M.prefix_map[prefix] then

@@ -62,7 +62,6 @@ test('format.paragraph should reformat the current paragraph', function()
 		''
 	})
 end)
-if not LINUX then skip('fmt si only installed on Linux') end
 
 test('format.paragraph should only reformat selected lines', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -83,7 +82,6 @@ test('format.paragraph should only reformat selected lines', function()
 		'line'
 	})
 end)
-if not LINUX then skip('fmt si only installed on Linux') end
 
 test('format.paragraph should only reformat the current style (e.g. Lua comments)', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -106,7 +104,6 @@ test('format.paragraph should only reformat the current style (e.g. Lua comments
 		'local y = 2'
 	})
 end)
-if not LINUX then skip('fmt si only installed on Linux') end
 
 test('format.paragraph should ignore header and footer lines (e.g. Doxygen comments)', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -149,7 +146,6 @@ test('format.paragraph should allow prefix mapping', function()
 		'local M = {}'
 	})
 end)
-if not LINUX then skip('fmt si only installed on Linux') end
 
 -- Coverage tests.
 
