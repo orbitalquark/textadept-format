@@ -74,6 +74,9 @@ M.on_save = true
 -- value is 100.
 M.line_length = 100
 
+local fmt = 'fmt'
+if OSX and not os.getenv('CI') then fmt = 'gfmt' end -- coreutils
+
 --- Reformats using a code formatter for the current buffer's lexer language either the selected
 -- text or the current paragraph, according to the rules of `textadept.editing.filter_through()`.
 -- @see commands
@@ -142,7 +145,7 @@ function M.paragraph()
 		buffer:set_target_range(pos, pos + #prefix)
 		buffer:replace_target(M.prefix_map[prefix])
 	end
-	local cmd = (not OSX and 'fmt' or 'gfmt') .. ' -w ' .. M.line_length .. ' -c'
+	local cmd = fmt .. ' -w ' .. M.line_length .. ' -c'
 	if prefix ~= '' then cmd = string.format('%s -p "%s"', cmd, M.prefix_map[prefix] or prefix) end
 	textadept.editing.filter_through(cmd)
 	if M.prefix_map[prefix] then
