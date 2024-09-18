@@ -3,6 +3,7 @@
 local format = require('format')
 
 local have_clang_format = LINUX or OSX and not os.getenv('CI')
+local have_fmt = LINUX or OSX and not os.getenv('CI')
 
 test('format.code should use clang-format if a .clang-format exists', function()
 	local file = 'file.c'
@@ -62,6 +63,7 @@ test('format.paragraph should reformat the current paragraph', function()
 		''
 	})
 end)
+if not have_fmt then skip('fmt is not available') end
 
 test('format.paragraph should only reformat selected lines', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -82,6 +84,7 @@ test('format.paragraph should only reformat selected lines', function()
 		'line'
 	})
 end)
+if not have_fmt then skip('fmt is not available') end
 
 test('format.paragraph should only reformat the current style (e.g. Lua comments)', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -104,6 +107,7 @@ test('format.paragraph should only reformat the current style (e.g. Lua comments
 		'local y = 2'
 	})
 end)
+if not have_fmt then skip('fmt is not available') end
 
 test('format.paragraph should ignore header and footer lines (e.g. Doxygen comments)', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -127,6 +131,7 @@ test('format.paragraph should ignore header and footer lines (e.g. Doxygen comme
 		'int x;'
 	})
 end)
+if not have_fmt then skip('fmt is not available') end
 
 test('format.paragraph should allow prefix mapping', function()
 	local _<close> = test.mock(format, 'line_length', 10)
@@ -146,6 +151,7 @@ test('format.paragraph should allow prefix mapping', function()
 		'local M = {}'
 	})
 end)
+if not have_fmt then skip('fmt is not available') end
 
 -- Coverage tests.
 
