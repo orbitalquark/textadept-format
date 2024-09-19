@@ -46,7 +46,7 @@ M.commands = {
 	cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
 	go = 'gofmt'
 }
-M.commands.ansi_c = M.commands.cpp
+M.commands.c = M.commands.cpp
 
 --- Header lines to ignore when reformatting paragraphs.
 -- These can be LuaDoc/LDoc or Doxygen headers for example.
