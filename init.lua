@@ -1,15 +1,16 @@
 -- Copyright 2021-2025 Mitchell. See LICENSE.
 
 --- Format/reformat paragraph and code.
---
 -- Install this module by copying it into your *~/.textadept/modules/* directory or Textadept's
 -- *modules/* directory, and then putting the following in your *~/.textadept/init.lua*:
 --
---	require('format')
+-- ```lua
+-- local format = require('format')
+-- ```
 --
 -- There will be an "Edit > Reformat" menu.
 --
--- ### Key Bindings
+-- ## Key Bindings
 --
 -- Windows and Linux | macOS | Terminal | Command
 -- -|-|-|-
@@ -48,26 +49,31 @@ M.commands = {
 }
 M.commands.c = M.commands.cpp
 
---- Header lines to ignore when reformatting paragraphs.
+--- List of header lines to ignore when reformatting paragraphs.
 -- These can be LuaDoc/LDoc or Doxygen headers for example.
+-- @usage table.insert(format.ignore_header_lines, '"""')
 M.ignore_header_lines = {'---', '/**'}
 
 --- Prefixes to remap when reformatting paragraphs.
 -- This is for paragraphs that have a first-line prefix that is different from subsequent
 -- line prefixes. For example, LuaDoc/LDoc comments start with '---' but continue with '--',
 -- and Doxygen comments start with '/**' but continue with ' *'.
+-- @usage format.prefix_map['##'] = '#'
 M.prefix_map = {['/**'] = ' *', ['---'] = '--'}
 
---- Footer lines to ignore when reformatting paragraphs.
+--- List of footer lines to ignore when reformatting paragraphs.
 -- These can be Doxygen footers for example.
+-- @usage table.insert(format.ignore_footer_lines, '"""')
 M.ignore_footer_lines = {'*/'}
 
---- Patterns that match filenames to ignore when formatting on save.
+--- List of patterns that match filenames to ignore when formatting on save.
 -- This is useful for projects with a top-level format config file, but subfolder dependencies
 -- whose code should not be formatted on save.
+-- @usage table.insert(format.ignore_file_patterns, '/testdata/')
 M.ignore_file_patterns = {}
 
---- Whether or not to invoke a code formatter on save. The default value is `true`.
+--- Invoke a code formatter on save.
+-- The default value is `true`.
 M.on_save = true
 
 --- The maximum number of characters to allow on a line when reformatting paragraphs. The default
