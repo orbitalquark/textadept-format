@@ -16,7 +16,7 @@ There will be an "Edit > Reformat" menu.
 Windows and Linux | macOS | Terminal | Command
 -|-|-|-
 **Edit**| | |
-Ctrl+Shift+J | ⌘⇧J | ^J | Reformat paragraph
+Ctrl+Shift+J | ⌘⇧J | M-S-J | Reformat paragraph
 
 <a id="format.code"></a>
 ## `format.code`()

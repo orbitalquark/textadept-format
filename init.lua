@@ -15,7 +15,7 @@
 -- Windows and Linux | macOS | Terminal | Command
 -- -|-|-|-
 -- **Edit**| | |
--- Ctrl+Shift+J | ⌘⇧J | ^J | Reformat paragraph
+-- Ctrl+Shift+J | ⌘⇧J | M-S-J | Reformat paragraph
 -- @module format
 local M = {}
 
@@ -167,6 +167,7 @@ table.insert(m_edit, #m_edit - 1, {
 	{_L['Code'], M.code}, --
 	{_L['Paragraph'], M.paragraph}
 })
-keys[not OSX and 'ctrl+J' or 'cmd+J'] = M.paragraph
+
+keys.assign_platform_bindings{[M.paragraph] = {'ctrl+J', 'cmd+J', 'meta+J'}}
 
 return M
