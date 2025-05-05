@@ -22,7 +22,7 @@ Ctrl+Shift+J | ⌘⇧J | M-S-J | Reformat paragraph
 ## `format.code`()
 
 Reformats using a code formatter for the current buffer's lexer language either the selected
-text or the current paragraph, according to the rules of `textadept.editing.filter_through()`.
+text or the current buffer, according to the rules of `textadept.editing.filter_through()`.
 
 See also: [`format.commands`](#format.commands)
 
@@ -33,7 +33,6 @@ Map of lexer languages to string code formatter commands or functions that retur
 commands.
 
 Fields:
-
 - `lua`: 
 - `cpp`: 
 - `go`: 
@@ -60,7 +59,6 @@ List of footer lines to ignore when reformatting paragraphs.
 These can be Doxygen footers for example.
 
 Fields:
-
 - `*/`: 
 
 Usage:
@@ -77,7 +75,6 @@ List of header lines to ignore when reformatting paragraphs.
 These can be LuaDoc/LDoc or Doxygen headers for example.
 
 Fields:
-
 - `---`: 
 - `/**`: 
 
@@ -125,7 +122,6 @@ line prefixes. For example, LuaDoc/LDoc comments start with '---' but continue w
 and Doxygen comments start with '/**' but continue with ' *'.
 
 Fields:
-
 - `[/**]`: 
 - `[---]`: 
 

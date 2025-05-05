@@ -81,7 +81,7 @@ M.on_save = true
 M.line_length = 100
 
 --- Reformats using a code formatter for the current buffer's lexer language either the selected
--- text or the current paragraph, according to the rules of `textadept.editing.filter_through()`.
+-- text or the current buffer, according to the rules of `textadept.editing.filter_through()`.
 -- @see commands
 function M.code()
 	local command = M.commands[buffer.lexer_language]
@@ -98,7 +98,10 @@ events.connect(events.FILE_BEFORE_SAVE, function(filename)
 	if filename then
 		for _, patt in ipairs(M.ignore_file_patterns) do if filename:find(patt) then return end end
 	end
+	local selection = buffer.selection_serialized
+	buffer:set_empty_selection(buffer.current_pos)
 	M.code()
+	buffer.selection_serialized = selection
 end)
 
 --- Reformats using the Unix `fmt` tool either the selected text or the current paragraph,
