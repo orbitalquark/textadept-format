@@ -46,6 +46,7 @@ test('format.on_save should ignore selected text', function()
 	test.assert_equal(buffer:get_text(), 'int main() { return 0; }')
 	test.assert_equal(buffer:get_sel_text(), 'int')
 end)
+if not have_clang_format then skip('clang-format is not available') end
 
 test('format.code should ignore saving files matching format.ignore_file_patterns', function()
 	local subdir = 'subdir'
