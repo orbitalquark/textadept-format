@@ -66,7 +66,7 @@ M.prefix_map = {['/**'] = ' *', ['---'] = '--'}
 -- @usage table.insert(format.ignore_footer_lines, '"""')
 M.ignore_footer_lines = {'*/'}
 
---- List of patterns that match filenames to ignore when formatting on save.
+--- List of Lua patterns that match filenames to ignore when formatting on save.
 -- This is useful for projects with a top-level format config file, but subfolder dependencies
 -- whose code should not be formatted on save.
 -- @usage table.insert(format.ignore_file_patterns, '/testdata/')
