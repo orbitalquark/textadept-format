@@ -19,15 +19,6 @@
 -- @module format
 local M = {}
 
--- Localizations.
-local _L = _L
-if not rawget(_L, 'Reformat') then
-	-- Menu.
-	_L['Reformat'] = 'Reformat'
-	_L['Code'] = '_Code'
-	_L['Paragraph'] = '_Paragraph'
-end
-
 --- Helper function that returns whether or not the given config file exists in the current or
 -- a parent directory of the current buffer's filename.
 local function has_config_file(filename)
@@ -163,7 +154,10 @@ function M.paragraph()
 	buffer:end_undo_action()
 end
 
--- Add menu entry.
+-- Add sub-menu.
+_L['Reformat'] = 'Reformat'
+_L['Code'] = '_Code'
+_L['Paragraph'] = '_Paragraph'
 local m_edit = textadept.menu.menubar['Edit']
 table.insert(m_edit, #m_edit - 1, {
 	title = _L['Reformat'], --
