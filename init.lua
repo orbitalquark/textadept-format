@@ -36,7 +36,7 @@ end
 M.commands = {
 	lua = function() return has_config_file('.lua-format') and 'lua-format' or nil end,
 	cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
-	go = 'gofmt'
+	go = 'gofmt', dart = 'dart format'
 }
 M.commands.c = M.commands.cpp
 
