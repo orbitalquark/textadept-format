@@ -1,4 +1,4 @@
--- Copyright 2021-2025 Mitchell. See LICENSE.
+-- Copyright 2021-2026 Mitchell. See LICENSE.
 
 --- Format/reformat paragraph and code.
 -- Install this module by copying it into your *~/.textadept/modules/* directory or Textadept's
