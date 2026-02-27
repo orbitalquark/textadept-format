@@ -31,11 +31,22 @@ local function has_config_file(filename)
 	return false
 end
 
+local function get_prettier_parser()
+	-- Most parsers are the same as the lexer name
+	local parser = buffer:get_lexer()
+	if parser == 'javascript' then
+		parser = 'babel'
+	end
+	return has_config_file('package.json') and 'npx prettier --parser ' .. parser or nil
+end
+
 --- Map of lexer languages to string code formatter commands or functions that return such
 -- commands.
 M.commands = {
 	lua = function() return has_config_file('.lua-format') and 'lua-format' or nil end,
 	cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
+	html = get_prettier_parser, css = get_prettier_parser, javascript = get_prettier_parser,
+	markdown = get_prettier_parser, yaml = get_prettier_parser,
 	go = 'gofmt', dart = 'dart format', python = 'black -'
 }
 M.commands.c = M.commands.cpp
