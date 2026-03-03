@@ -47,7 +47,7 @@ M.commands = {
 	cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
 	html = get_prettier_parser, css = get_prettier_parser, javascript = get_prettier_parser,
 	markdown = get_prettier_parser, yaml = get_prettier_parser,
-	go = 'gofmt', dart = 'dart format', python = 'black -'
+	go = 'gofmt', dart = 'dart format', python = ((WIN32 and 'py' or 'python') .. ' -m black -')
 }
 M.commands.c = M.commands.cpp
 
