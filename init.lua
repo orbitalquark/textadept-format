@@ -21,11 +21,21 @@ local M = {}
 
 --- Helper function that returns whether or not the given config file exists in the current or
 -- a parent directory of the current buffer's filename.
-local function has_config_file(filename)
+local function has_config_file(filename, contains)
 	if not buffer.filename then return false end
 	local dir = buffer.filename:match('^(.+)[/\\]')
 	while dir do
-		if lfs.attributes(dir .. '/' .. filename) then return true end
+		if lfs.attributes(dir .. '/' .. filename) then
+			if not contains then return true
+			else
+				local f = io.open(dir .. '/' .. filename, mode)
+				if f then
+					local found = f:read('a'):match(contains)
+					f:close()
+					if found then return true end
+				end
+			end
+		end
 		dir = dir:match('^(.+)[/\\]')
 	end
 	return false
@@ -37,7 +47,7 @@ local function get_prettier_parser()
 	if parser == 'javascript' then
 		parser = 'babel'
 	end
-	return has_config_file('package.json') and 'npx prettier --parser ' .. parser or nil
+	return has_config_file('package.json', 'prettier') and 'npx prettier --parser ' .. parser or nil
 end
 
 --- Map of lexer languages to string code formatter commands or functions that return such
