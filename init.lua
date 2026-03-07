@@ -62,7 +62,7 @@ M.commands = {
 		if has_config_file('ruff.toml') or has_config_file('pyproject.toml', 'ruff') then
 			return 'ruff format -'
 		else
-			return ((WIN32 and 'py' or 'python') .. ' -m black -')
+			return ((WIN32 and 'py -m ' or '') .. 'black -')
 		end
 	end
 }
