@@ -23,6 +23,7 @@ local M = {}
 -- the current buffer's filename.
 -- Also returns the config file's filename.
 -- @param filename String config filename.
+-- @usage format.config_file_exists('ruff.toml')
 function M.config_file_exists(filename)
 	if not buffer.filename then return false end
 	local dir = buffer.filename:match('^(.+)[/\\]')
@@ -38,6 +39,7 @@ end
 -- the current buffer's filename, and whether or not it contains the given text.
 -- @param filename String config filename.
 -- @param text String text to look for.
+-- @usage format.config_file_contains('pyproject.toml', '[tool.ruff')
 function M.config_file_contains(filename, text)
 	local exists, config_file = M.config_file_exists(filename)
 	if not exists then return false end
@@ -47,10 +49,17 @@ end
 
 --- Map of lexer languages to string code formatter commands or functions that return such
 -- commands.
+-- Commands should accept code via stdin and output formatted code via stdout.
+-- @usage format.commands.python = 'black -'
 M.commands = {
 	lua = function() return M.config_file_exists('.lua-format') and 'lua-format' or nil end,
 	cpp = function()
 		return M.config_file_exists('.clang-format') and 'clang-format -style=file' or nil
+	end, --
+	python = function()
+		if M.config_file_exists('ruff.toml') or M.config_file_contains('pyproject.toml', '[tool.ruff') then
+			return 'ruff format -'
+		end
 	end, --
 	go = 'gofmt', dart = 'dart format'
 }

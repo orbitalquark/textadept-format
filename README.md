@@ -32,11 +32,20 @@ See also: [`format.commands`](#format.commands)
 Map of lexer languages to string code formatter commands or functions that return such
 commands.
 
+Commands should accept code via stdin and output formatted code via stdout.
+
 Fields:
 - `lua`: 
 - `cpp`: 
+- `python`: 
 - `go`: 
 - `dart`: 
+
+Usage:
+
+```lua
+format.commands.python = 'black -'
+```
 
 <a id="format.config_file_contains"></a>
 ## `format.config_file_contains`(*filename*, *text*)
@@ -48,6 +57,12 @@ Parameters:
 - *filename*:  String config filename.
 - *text*:  String text to look for.
 
+Usage:
+
+```lua
+format.config_file_contains('pyproject.toml', '[tool.ruff')
+```
+
 <a id="format.config_file_exists"></a>
 ## `format.config_file_exists`(*filename*)
 
@@ -58,6 +73,12 @@ Also returns the config file's filename.
 
 Parameters:
 - *filename*:  String config filename.
+
+Usage:
+
+```lua
+format.config_file_exists('ruff.toml')
+```
 
 <a id="format.ignore_file_patterns"></a>
 ## `format.ignore_file_patterns`
