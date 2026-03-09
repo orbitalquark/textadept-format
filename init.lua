@@ -19,23 +19,39 @@
 -- @module format
 local M = {}
 
---- Helper function that returns whether or not the given config file exists in the current or
--- a parent directory of the current buffer's filename.
-local function has_config_file(filename)
+--- Returns whether or not the given config file exists in the current or a parent directory of
+-- the current buffer's filename.
+-- Also returns the config file's filename.
+-- @param filename String config filename.
+function M.config_file_exists(filename)
 	if not buffer.filename then return false end
 	local dir = buffer.filename:match('^(.+)[/\\]')
 	while dir do
-		if lfs.attributes(dir .. '/' .. filename) then return true end
+		local config_file = dir .. '/' .. filename
+		if lfs.attributes(config_file) then return true, config_file end
 		dir = dir:match('^(.+)[/\\]')
 	end
-	return false
+	return false, nil
+end
+
+--- Returns whether or not the given config file exists in the current or a parent directory of
+-- the current buffer's filename, and whether or not it contains the given text.
+-- @param filename String config filename.
+-- @param text String text to look for.
+function M.config_file_contains(filename, text)
+	local exists, config_file = M.config_file_exists(filename)
+	if not exists then return false end
+	local f<close> = io.open(filename)
+	return f:read('a'):find(text, 1, true) ~= nil
 end
 
 --- Map of lexer languages to string code formatter commands or functions that return such
 -- commands.
 M.commands = {
-	lua = function() return has_config_file('.lua-format') and 'lua-format' or nil end,
-	cpp = function() return has_config_file('.clang-format') and 'clang-format -style=file' or nil end,
+	lua = function() return M.config_file_exists('.lua-format') and 'lua-format' or nil end,
+	cpp = function()
+		return M.config_file_exists('.clang-format') and 'clang-format -style=file' or nil
+	end, --
 	go = 'gofmt', dart = 'dart format'
 }
 M.commands.c = M.commands.cpp

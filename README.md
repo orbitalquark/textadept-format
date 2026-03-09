@@ -36,6 +36,28 @@ Fields:
 - `lua`: 
 - `cpp`: 
 - `go`: 
+- `dart`: 
+
+<a id="format.config_file_contains"></a>
+## `format.config_file_contains`(*filename*, *text*)
+
+Returns whether or not the given config file exists in the current or a parent directory of
+the current buffer's filename, and whether or not it contains the given text.
+
+Parameters:
+- *filename*:  String config filename.
+- *text*:  String text to look for.
+
+<a id="format.config_file_exists"></a>
+## `format.config_file_exists`(*filename*)
+
+Returns whether or not the given config file exists in the current or a parent directory of
+the current buffer's filename.
+
+Also returns the config file's filename.
+
+Parameters:
+- *filename*:  String config filename.
 
 <a id="format.ignore_file_patterns"></a>
 ## `format.ignore_file_patterns`
