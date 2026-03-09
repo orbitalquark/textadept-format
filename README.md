@@ -32,7 +32,7 @@ See also: [`format.commands`](#format.commands)
 Map of lexer languages to string code formatter commands or functions that return such
 commands.
 
-Commands should accept code via stdin and output formatted code via stdout.
+Commands should accept code via stdin and output formatted code to stdout.
 
 Fields:
 - `lua`: 

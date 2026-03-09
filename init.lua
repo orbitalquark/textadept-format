@@ -43,13 +43,13 @@ end
 function M.config_file_contains(filename, text)
 	local exists, config_file = M.config_file_exists(filename)
 	if not exists then return false end
-	local f<close> = io.open(filename)
+	local f<close> = io.open(config_file)
 	return f:read('a'):find(text, 1, true) ~= nil
 end
 
 --- Map of lexer languages to string code formatter commands or functions that return such
 -- commands.
--- Commands should accept code via stdin and output formatted code via stdout.
+-- Commands should accept code via stdin and output formatted code to stdout.
 -- @usage format.commands.python = 'black -'
 M.commands = {
 	lua = function() return M.config_file_exists('.lua-format') and 'lua-format' or nil end,
