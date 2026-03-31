@@ -26,7 +26,11 @@ test('format.code should output errors to the statusbar', function()
 
 	format.code()
 
-	test.assert_contains(ui.statusbar_text, _L['Format error:'] .. ' ' .. command:gsub('%-', '%%-'))
+	-- Note: Windows spawns processes via cmd.exe, which always exists, so the statusbar
+	-- error from `textadept.editing.filter_through()` will be displayed.
+	if not WIN32 then
+		test.assert_contains(ui.statusbar_text, _L['Format error:'] .. ' ' .. command:gsub('%-', '%%-'))
+	end
 	test.assert_equal(#_BUFFERS, 1)
 end)
 
