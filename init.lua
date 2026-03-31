@@ -106,7 +106,8 @@ function M.code()
 	local current_dir = lfs.currentdir()
 	local dir = (buffer.filename or ''):match('^(.+)[/\\]') or io.get_project_root()
 	if dir and dir ~= current_dir then lfs.chdir(dir) end
-	textadept.editing.filter_through(command)
+	local ok, errmsg = pcall(textadept.editing.filter_through, command)
+	if not ok then ui.statusbar_text = _L['Format error:'] .. ' ' .. errmsg:match('^.-: (.+)$') end
 	if dir and dir ~= current_dir then lfs.chdir(current_dir) end -- restore
 end
 events.connect(events.FILE_BEFORE_SAVE, function(filename)

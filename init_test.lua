@@ -19,6 +19,17 @@ test('format.code should use clang-format if a .clang-format exists', function()
 end)
 if not have_clang_format then skip('clang-format is not available') end
 
+test('format.code should output errors to the statusbar', function()
+	local _<close> = test.tmpfile('.txt', true)
+	local command = 'does-not-exist'
+	local _<close> = test.mock(format.commands, 'text', command)
+
+	format.code()
+
+	test.assert_contains(ui.statusbar_text, _L['Format error:'] .. ' ' .. command:gsub('%-', '%%-'))
+	test.assert_equal(#_BUFFERS, 1)
+end)
+
 test('format.code should not format on save if format.on_save is disabled', function()
 	local _<close> = test.mock(format, 'on_save', false)
 	local file = 'file.c'
