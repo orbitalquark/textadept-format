@@ -2,8 +2,8 @@
 
 local format = require('format')
 
-local have_clang_format = LINUX or OSX and not os.getenv('CI')
-local have_fmt = LINUX or OSX and not os.getenv('CI')
+local have_clang_format = OS == 'linux' or OS == 'macos' and not os.getenv('CI')
+local have_fmt = OS == 'linux' or OS == 'macos' and not os.getenv('CI')
 
 test('format.code should use clang-format if a .clang-format exists', function()
 	local file = 'file.c'
@@ -28,7 +28,7 @@ test('format.code should output errors to the statusbar', function()
 
 	-- Note: Windows spawns processes via cmd.exe, which always exists, so the statusbar
 	-- error from `textadept.editing.filter_through()` will be displayed.
-	if not WIN32 then
+	if OS ~= 'windows' then
 		test.assert_contains(ui.statusbar_text, _L['Format error:'] .. ' ' .. command:gsub('%-', '%%-'))
 	end
 	test.assert_equal(#_BUFFERS, 1)
