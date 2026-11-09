@@ -153,8 +153,7 @@ test('format.paragraph should ignore header and footer lines (e.g. Doxygen comme
 
 	test.assert_equal(buffer:get_text(), test.lines{
 		'/**', --
-		' * This', --
-		' * is', --
+		' * This is', --
 		' * really', --
 		' * long', --
 		' */', --
